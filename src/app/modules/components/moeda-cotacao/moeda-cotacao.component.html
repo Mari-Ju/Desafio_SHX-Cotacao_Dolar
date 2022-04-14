@@ -1,0 +1,67 @@
+<h1>Cotação USD-BRL</h1>
+<h1 class="w3-container">{{ 1 | currency: 'USD'}} = {{cotacao.compra | currency}}</h1>
+
+<div class="w3-bar w3-blueSHX">
+    <h2>Digite nos campos o valor que deseja converter:</h2>
+    <br>
+    <br>
+    <div class="w3-margin">
+        <form>
+            <label class="w3-margin-left">US$:</label><input type="text" name="n1" [(ngModel)]="numero1">
+            <label class="w3-margin-left">R$:</label><input type="text" name="n2" [(ngModel)]="cotacao.compra">
+            <button class="w3-btn w3-blue w3-margin-left" (click)="calcularCotacaoMoeda(numero1, cotacao.compra)">Converter</button>
+        </form>
+    </div>
+    <h1 class="w3-container">{{resultado | currency}}</h1>
+   
+</div>
+
+<div>
+    <h1 class="w3-center w3-blue">Lista de Período de cotação</h1>
+    <div class="w3-margin">
+        <form>
+            <label class="w3-margin-left">Período Inicial:</label><input type="date" id="txtPeriodoInicial"
+                maxlength="10" name="txtPeriodoInicial" [(ngModel)]="periodoInicial">
+            <label class="w3-margin-left">Período Final:</label><input type="date" id="txtPeriodoFinal" maxlength="10"
+                name="txtPeriodoFinal" [(ngModel)]="periodoFinal">
+            <button type="button" id="btnBuscar" class="w3-btn w3-blue w3-margin-left"
+                (click)="getByPeriodo()">Buscar</button>
+            <button type="button" id="btnLimpar" class="w3-btn w3-blue w3-margin-left"
+                (click)="clearList()">Limpar</button>
+        </form>
+    </div>
+    <div class="w3-responsive">
+        <table id="tbConversao" class="w3-table-all">
+            <thead>
+                <tr class="w3-blue">
+                    <td></td>
+                    <td class="w3-right-align" (click)="sort('ValorCompra')">
+                        Cotação Compra
+                        <span *ngIf="key == 'ValorCompra'">{{reverse ? '▲' : '▼'}}</span>
+                    </td>
+                    <td class="w3-right-align">Cotação Venda</td>
+                    <td class="w3-right-align" (click)="sort('Data')">
+                        Data/Hora Cotação Compra
+                        <span *ngIf="key == 'Data'">{{reverse ? '▲' : '▼'}}</span>
+                    </td>
+                </tr>
+            </thead>
+            <tbody *ngIf="cotacoes.length > 0; else listaVazia">
+                <tr *ngFor="let cotacao of cotacoes | orderBy: key : reverse; let i = index">
+                    <td><a style="cursor: pointer;"></a></td>
+                    <td class="w3-right-align">{{cotacao.compra | currency}}</td>
+                    <td class="w3-right-align">{{cotacao.venda | currency}}</td>
+                    <td class="w3-right-align">{{cotacao.data | date: 'short'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-template #listaVazia>
+    <tbody>
+        <tr>
+            <td colspan="5">Digite um período válido.</td>
+        </tr>
+    </tbody>
+</ng-template>
