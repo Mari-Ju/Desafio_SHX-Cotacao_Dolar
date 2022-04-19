@@ -26,6 +26,7 @@ export class MoedaCotacaoComponent implements OnInit {
   dataFinal: string;
   dataInicial: string;
   bsModalRef?: BsModalRef;
+  cotacaoAtual: number = 0;
 
 
   constructor(private router: Router,
@@ -52,6 +53,7 @@ export class MoedaCotacaoComponent implements OnInit {
       .subscribe((cotacao: Cotacao[]) => {
         this.cotacao = cotacao[0];
         console.log(this.cotacao.venda);
+        this.cotacaoAtual = this.cotacao.venda;
       })
   }
 

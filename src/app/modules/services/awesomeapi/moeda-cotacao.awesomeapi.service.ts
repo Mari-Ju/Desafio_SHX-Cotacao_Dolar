@@ -31,7 +31,7 @@ export class MoedaCotacaoServiceAwesome implements MoedaCotacaoService {
     let parametroInicial = this.formatDate(periodoInicial);
     let parametroFinal = this.formatDate(periodoFinal);
     return this.httpClient
-      .get<Tick[]>(`https://economia.awesomeapi.com.br/json/daily/${this.SIMB_MOEDA}?start_date=${parametroInicial}&end_date=${parametroFinal}`)
+      .get<Tick[]>(`https://economia.awesomeapi.com.br/json/daily/${this.SIMB_MOEDA}/1000?start_date=${parametroInicial}&end_date=${parametroFinal}`)
       .pipe(map(x => {
         let name = (x || [{}])[0].name;
         return x.map(t => {

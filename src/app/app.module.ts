@@ -8,12 +8,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { CotacaoModule } from './modules/routers/cotacao.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
-import { MensagemAlertaComponent } from './modules/components/modal/mensagem-alerta/mensagem-alerta.component';
 import { SharedModule } from './modules/components/modal/shared.module';
 
 registerLocaleData(localePt);
@@ -33,7 +31,7 @@ registerLocaleData(localePt);
     SharedModule
   ],
   providers: [
-    { provide: MoedaCotacaoService, useClass: MoedaCotacaoServiceOlindaapi },
+    { provide: MoedaCotacaoService, useClass: MoedaCotacaoServiceAwesome},
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL'},
   ],

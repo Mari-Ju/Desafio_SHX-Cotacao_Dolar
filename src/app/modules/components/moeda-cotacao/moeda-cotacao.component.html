@@ -1,5 +1,5 @@
 <h1>Cotação USD-BRL</h1>
-<h1 class="w3-container">{{ 1 | currency: 'USD'}} = {{cotacao.compra | currency}}</h1>
+<h1 class="w3-container">{{ 1 | currency: 'USD'}} = {{cotacao.venda | currency}}</h1>
 
 <div class="w3-bar w3-blueSHX">
     <h2>Digite nos campos o valor que deseja converter:</h2>
@@ -40,6 +40,8 @@
                         <span *ngIf="key == 'ValorCompra'">{{reverse ? '▲' : '▼'}}</span>
                     </td>
                     <td class="w3-right-align">Cotação Venda</td>
+                    <td class="w3-right-align">Diferença entre Cotação Venda e o Dolar Atual</td>
+                    <td class="w3-right-align">Cotação do Dolar Atual</td>
                     <td class="w3-right-align" (click)="sort('Data')">
                         Data/Hora Cotação Compra
                         <span *ngIf="key == 'Data'">{{reverse ? '▲' : '▼'}}</span>
@@ -47,10 +49,17 @@
                 </tr>
             </thead>
             <tbody *ngIf="cotacoes.length > 0; else listaVazia">
-                <tr *ngFor="let cotacao of cotacoes | orderBy: key : reverse; let i = index">
+                <tr *ngFor="let cotacao of cotacoes | orderBy: key : reverse; let i = index ">
                     <td><a style="cursor: pointer;"></a></td>
                     <td class="w3-right-align">{{cotacao.compra | currency}}</td>
                     <td class="w3-right-align">{{cotacao.venda | currency}}</td>
+                    <td *ngIf="cotacaoAtual - cotacao.venda > 1.5" class="w3-right-align">
+                        {{cotacaoAtual - cotacao.venda | currency}}
+                    </td>
+                    <td *ngIf= "cotacaoAtual - cotacao.venda < 1.5" class="w3-right-align w3-red" >
+                        {{cotacaoAtual - cotacao.venda | currency}}
+                    </td>
+                    <td class="w3-right-align"> {{cotacaoAtual | currency}} </td>
                     <td class="w3-right-align">{{cotacao.data | date: 'short'}}</td>
                 </tr>
             </tbody>
@@ -65,3 +74,4 @@
         </tr>
     </tbody>
 </ng-template>
+
